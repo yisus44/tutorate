@@ -22,13 +22,15 @@ public class Controlador
     private PreparedStatement queryEliminar; 
     
     private final String qInsertarMaestro = "INSERT INTO Maestros VALUES (0, ?, ?, ?, ?, ?)";
-    private final String qInsertarAlumno = "INSERT INTO Alumnos VALUES (0, ?, ?, ?, ?)";
+    private final String qInsertarAlumno = "INSERT INTO Alumnos VALUES (0, ?, ?, ?, ?, ?)";
 
     private final String qConsultarMaestros = "SELECT * FROM Maestros";
     private final String qConsultarAlumnos = "SELECT * FROM Alumnos";
 
     private final String qConsultarMaestroPorID = "SELECT * FROM Maestros WHERE MaestroID = ?";
     private final String qConsultarAlumnoPorID = "SELECT * FROM Alumnos WHERE AlumnoID = ?";
+    
+    private final String qConsultarMaestroPorNombre = "SELECT * FROM Maestros WHERE Nombre = ?";
 
     private final String qActualizarMaestroPorID = "UPDATE Maestros SET Nombre = ?, Email = ?, Edad = ?, Especialidad = ?, Contrasena = ? WHERE MaestroID = ?";
     private final String qActualizarAlumnoPorID = "UPDATE Alumnos SET Nombre = ?, Email = ?, Edad = ?, Contrasena = ? WHERE AlumnoID = ?";
@@ -38,19 +40,48 @@ public class Controlador
 
     
     
-    public Controlador() throws Exception 
+    
+    String nombreProfe;
+    int idProfe;
+    
+    
+    
+    
+    
+    public Controlador() 
     {     
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error al instanciar controlador");
+        }
     }
     
-    public void abrirConexion() throws Exception 
+    public void abrirConexion() 
     {
-        conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1/tutorate?serverTimezone=GMT-5","root","");
+        try
+        {
+            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1/tutorate?serverTimezone=GMT-5","root","");
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error al abrir conexion con BD");
+        }
     }
     
-    public void cerrarConexion() throws Exception 
+    public void cerrarConexion() 
     {
-        conexion.close();
+        try
+        {
+            conexion.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error al cerrar conexion con BD");
+        }
     }
     
    
@@ -81,14 +112,14 @@ public class Controlador
     {
         alumno = new Alumno(nombre, email, edad, contraseña);
         
-        System.out.println("Se ha creado el objeto Alumno");
+        //System.out.println("Se ha creado el objeto Alumno");
     }
     
     public void crearMaestro(String nombre, String email, int edad, String contraseña, String especialidad)
     {
         maestro = new Maestro(nombre, email, edad, contraseña, especialidad);
         
-        System.out.println("Se ha cargado el objeto Maestro");
+        //System.out.println("Se ha cargado el objeto Maestro");
     }
     
     
@@ -97,11 +128,16 @@ public class Controlador
     {
         try 
         {
+            
+            consultarMaestroPorNombre(maestro.getNombre());
+            
+            
             queryInsertar = conexion.prepareStatement(qInsertarAlumno);
             queryInsertar.setString(1, alumno.getNombre());
             queryInsertar.setString(2, alumno.getEmail());
             queryInsertar.setInt(3, alumno.getEdad());
             queryInsertar.setString(4, alumno.getContraseña());
+            queryInsertar.setInt(5, idProfe);
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 
@@ -167,30 +203,56 @@ public class Controlador
             rs = queryConsultar.executeQuery();
             
             if(rs.next())
-                crearMaestro(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), 
-                        rs.getString("Especialidad"), rs.getString("Contrasena"));
+                crearMaestro(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), rs.getString("Contrasena"),
+                        rs.getString("Especialidad"));
             else
                 crearMaestro("", "", 0, "", "");
             
         }
         catch (SQLException ex) 
         {
-            System.out.println("Controlador: Error al consultar un maestro" + "\nError: " + ex);  
+            System.out.println("Controlador: Error al consultar un maestro por id" + "\nError: " + ex);  
+        }
+    }
+    
+    public void consultarMaestroPorNombre(String nombre) 
+    {
+        try 
+        {
+            ResultSet rs = null;
+            
+            queryConsultar = conexion.prepareStatement(qConsultarMaestroPorNombre);
+            queryConsultar.setString(1, nombre);
+            rs = queryConsultar.executeQuery();
+            
+            /*if(rs.next())
+                crearMaestro(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), rs.getString("Contrasena"),
+                        rs.getString("Especialidad"));
+            else
+                crearMaestro("", "", 0, "", "");*/
+            
+            if(rs.next())
+                idProfe = rs.getInt("MaestroID");
+            
+        }
+        catch (SQLException ex) 
+        {
+            System.out.println("Controlador: Error al consultar un maestro por nombre" + "\nError: " + ex);  
         }
     }
     
     
     
-    public void actualizarAlumno() 
+    public void actualizarAlumno(int ID) 
     {
         try 
         {
-            queryInsertar = conexion.prepareStatement(qInsertarAlumno);
+            queryInsertar = conexion.prepareStatement(qActualizarAlumnoPorID);
             queryInsertar.setString(1, alumno.getNombre());
             queryInsertar.setString(2, alumno.getEmail());
             queryInsertar.setInt(3, alumno.getEdad());
             queryInsertar.setString(4, alumno.getContraseña());
-            queryInsertar.setInt(5, alumno.getID());
+            queryInsertar.setInt(5, ID);
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 
@@ -199,17 +261,17 @@ public class Controlador
         }
     }
     
-    public void actualizarMaestro() 
+    public void actualizarMaestro(int ID) 
     {
         try 
         {
-            queryInsertar = conexion.prepareStatement(qInsertarMaestro);
+            queryInsertar = conexion.prepareStatement(qActualizarMaestroPorID);
             queryInsertar.setString(1, maestro.getNombre());
             queryInsertar.setString(2, maestro.getEmail());
             queryInsertar.setInt(3, maestro.getEdad());
             queryInsertar.setString(4, maestro.getEspecialidad());
             queryInsertar.setString(5, maestro.getContraseña());
-            queryInsertar.setInt(6, maestro.getID());
+            queryInsertar.setInt(6, ID);
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 
@@ -220,12 +282,12 @@ public class Controlador
     
     
     
-    public void eliminarAlumno() 
+    public void eliminarAlumno(int ID) 
     {
         try 
         {
             queryInsertar = conexion.prepareStatement(qEliminarAlumnoPorID);
-            queryInsertar.setInt(1, alumno.getID());
+            queryInsertar.setInt(1, ID);
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 
@@ -234,12 +296,12 @@ public class Controlador
         }
     }
     
-    public void eliminarMaestro() 
+    public void eliminarMaestro(int ID) 
     {
         try 
         {
             queryInsertar = conexion.prepareStatement(qEliminarMaestroPorID);
-            queryInsertar.setInt(1, maestro.getID());
+            queryInsertar.setInt(1, ID);
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 
