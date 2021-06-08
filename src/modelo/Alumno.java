@@ -3,24 +3,24 @@ package modelo;
 
 //bean
 public class Alumno extends Usuario {
-    private String tutor;
+    private int tutor;
    
     //No añadimos un tutor en el constructor por si el usuario no quiere agregarlo cuando crea su cuenta
     public Alumno(int id, String nombre, String email, int edad,String contraseña,String especialidad) {
         super(id,nombre,email,edad,contraseña);
-        this.tutor="";
+        this.tutor=0;
     }
 
     public Alumno() {
      super();
-     this.tutor="";
+     this.tutor=0;
     }
 
-    public String getTutores() {
-      return this.tutor="";
+    public int getTutor() {
+      return this.tutor;
     }
 
-    public void setTutor(String tutor) {
+    public void setTutor(int tutor) {
         this.tutor = tutor;
     }
   
