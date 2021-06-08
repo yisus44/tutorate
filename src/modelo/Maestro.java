@@ -8,8 +8,13 @@ public class Maestro extends Usuario {
     private String especialdad;
    
 
-    public Maestro(int id, String nombre, String email, int edad,String contraseña,String especialidad) {
+    public Maestro(int id, String nombre, String email, int edad, String contraseña, String especialidad) {
         super(id,nombre,email,edad,contraseña);
+        this.especialdad=especialidad;
+    }
+    
+    public Maestro(String nombre, String email, int edad, String contraseña, String especialidad) {
+        super(nombre,email,edad,contraseña);
         this.especialdad=especialidad;
     }
 

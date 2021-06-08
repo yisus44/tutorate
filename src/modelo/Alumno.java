@@ -6,8 +6,13 @@ public class Alumno extends Usuario {
     private String tutor;
    
     //No añadimos un tutor en el constructor por si el usuario no quiere agregarlo cuando crea su cuenta
-    public Alumno(int id, String nombre, String email, int edad,String contraseña,String especialidad) {
+    public Alumno(int id, String nombre, String email, int edad, String contraseña) {
         super(id,nombre,email,edad,contraseña);
+        this.tutor="";
+    }
+    
+    public Alumno(String nombre, String email, int edad, String contraseña) {
+        super(nombre,email,edad,contraseña);
         this.tutor="";
     }
 

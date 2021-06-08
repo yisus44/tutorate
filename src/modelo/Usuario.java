@@ -12,8 +12,16 @@ public class Usuario {
     public String contraseña;
    
 
-    public Usuario(int id, String nombre, String email, int edad,String contraseña) {
-        this.ID = ID;
+    public Usuario(int id, String nombre, String email, int edad, String contraseña) {
+        this.ID = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.edad=edad;
+        this.contraseña=contraseña;
+    }
+    
+    public Usuario(String nombre, String email, int edad, String contraseña) {
+        this.ID = 0;
         this.nombre = nombre;
         this.email = email;
         this.edad=edad;
