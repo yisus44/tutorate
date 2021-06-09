@@ -13,7 +13,7 @@ public class Alumno extends Usuario {
     
     public Alumno(String nombre, String email, int edad, String contraseña) {
         super(nombre,email,edad,contraseña);
-        this.tutor="";
+        this.tutor=0;
     }
 
     public Alumno() {

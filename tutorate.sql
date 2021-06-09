@@ -27,6 +27,16 @@ Tutor INT,
 PRIMARY KEY(AlumnoID),
 FOREIGN KEY(Tutor) REFERENCES Maestros(MaestroID)
 );
+
+CREATE TABLE Tutorias
+(
+    IDTutoria INT NOT NULL,
+    IDMaestro INT NOT NULL,
+    IDAlumno INT NOT NULL,
+    PRIMARY KEY (IDTutoria),
+    FOREIGN KEY(IDMaestro) REFERENCES Maestros,
+    FOREIGN KEY(IDAlumno) REFERENCES Alumnos
+);
 /*
 //////////////////////////////////
 Consultas
