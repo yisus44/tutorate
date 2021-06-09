@@ -60,7 +60,7 @@ public class Controlador
         }
     }
     
-    public void abrirConexion() 
+    public void abrirConexion() throws Exception
     {
         try
         {
@@ -69,6 +69,7 @@ public class Controlador
         catch(Exception ex)
         {
             System.out.println("Error al abrir conexion con BD");
+            
         }
     }
     
@@ -108,17 +109,15 @@ public class Controlador
     
     
     
-    public void crearAlumno(String nombre, String email, int edad, String contraseña)
+    public void cargarAlumno(String nombre, String email, int edad, String contraseña, int IDtutor)
     {
-        alumno = new Alumno(nombre, email, edad, contraseña);
-        
+        alumno = new Alumno(nombre, email, edad, contraseña, IDtutor);
         //System.out.println("Se ha creado el objeto Alumno");
     }
     
-    public void crearMaestro(String nombre, String email, int edad, String contraseña, String especialidad)
+    public void cargarMaestro(String nombre, String email, int edad, String contraseña, String especialidad)
     {
         maestro = new Maestro(nombre, email, edad, contraseña, especialidad);
-        
         //System.out.println("Se ha cargado el objeto Maestro");
     }
     
@@ -128,16 +127,14 @@ public class Controlador
     {
         try 
         {
-            
-            consultarMaestroPorNombre(maestro.getNombre());
-            
+            //consultarMaestroPorNombre(maestro.getNombre());
             
             queryInsertar = conexion.prepareStatement(qInsertarAlumno);
             queryInsertar.setString(1, alumno.getNombre());
             queryInsertar.setString(2, alumno.getEmail());
             queryInsertar.setInt(3, alumno.getEdad());
             queryInsertar.setString(4, alumno.getContraseña());
-            queryInsertar.setInt(5, idProfe);
+            queryInsertar.setInt(5, alumno.getTutor());
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 
@@ -178,11 +175,11 @@ public class Controlador
             
             if(rs.next())
             {
-                crearAlumno(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), rs.getString("Contrasena"));
+                cargarAlumno(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), rs.getString("Contrasena"), 0);
             }
             else
             {
-                crearAlumno("", "", 0, "");
+                cargarAlumno("", "", 0, "", 0);
             }
             
         }
@@ -203,10 +200,10 @@ public class Controlador
             rs = queryConsultar.executeQuery();
             
             if(rs.next())
-                crearMaestro(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), rs.getString("Contrasena"),
+                cargarMaestro(rs.getString("Nombre"), rs.getString("Email"), rs.getInt("Edad"), rs.getString("Contrasena"),
                         rs.getString("Especialidad"));
             else
-                crearMaestro("", "", 0, "", "");
+                cargarMaestro("", "", 0, "", "");
             
         }
         catch (SQLException ex) 

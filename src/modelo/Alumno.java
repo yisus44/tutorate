@@ -11,9 +11,13 @@ public class Alumno extends Usuario {
         this.tutor=0;
     }
     
-    public Alumno(String nombre, String email, int edad, String contraseña) {
+    public Alumno(String nombre, String email, int edad, String contraseña, int tutor) {
         super(nombre,email,edad,contraseña);
+<<<<<<< Updated upstream
         this.tutor=0;
+=======
+        this.tutor=tutor;
+>>>>>>> Stashed changes
     }
 
     public Alumno() {
@@ -21,7 +25,11 @@ public class Alumno extends Usuario {
      this.tutor=0;
     }
 
+<<<<<<< Updated upstream
     public int getTutores() {
+=======
+    public int getTutor() {
+>>>>>>> Stashed changes
       return this.tutor;
     }
 
