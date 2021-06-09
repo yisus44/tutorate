@@ -48,7 +48,7 @@ public class Controlador
     
     
     
-    public Controlador() 
+    public Controlador() throws Exception
     {     
         try
         {
@@ -56,7 +56,7 @@ public class Controlador
         }
         catch(Exception ex)
         {
-            System.out.println("Error al instanciar controlador");
+            System.out.println("Controlador: Error al instanciar controlador");
         }
     }
     
@@ -68,12 +68,12 @@ public class Controlador
         }
         catch(Exception ex)
         {
-            System.out.println("Error al abrir conexion con BD");
+            System.out.println("Controlador: Error al abrir conexion con BD");
             
         }
     }
     
-    public void cerrarConexion() 
+    public void cerrarConexion() throws Exception
     {
         try
         {
@@ -81,7 +81,7 @@ public class Controlador
         }
         catch(Exception ex)
         {
-            System.out.println("Error al cerrar conexion con BD");
+            System.out.println("Controlador: Error al cerrar conexion con BD");
         }
     }
     
@@ -123,7 +123,7 @@ public class Controlador
     
     
    
-    public void insertarAlumno() 
+    public void insertarAlumno() throws Exception
     {
         try 
         {
@@ -143,7 +143,7 @@ public class Controlador
         }
     }
     
-    public void insertarMaestro() 
+    public void insertarMaestro() throws Exception
     {
         try 
         {
@@ -163,7 +163,7 @@ public class Controlador
     
     
     
-    public void consultarAlumnoPorID(int ID) 
+    public void consultarAlumnoPorID(int ID) throws Exception
     {
         try 
         {
@@ -189,7 +189,7 @@ public class Controlador
         }
     }
     
-    public void consultarMaestroPorID(int ID) 
+    public void consultarMaestroPorID(int ID) throws Exception
     {
         try 
         {
@@ -212,7 +212,7 @@ public class Controlador
         }
     }
     
-    public void consultarMaestroPorNombre(String nombre) 
+    public void consultarMaestroPorNombre(String nombre) throws Exception
     {
         try 
         {
@@ -240,7 +240,7 @@ public class Controlador
     
     
     
-    public void actualizarAlumno(int ID) 
+    public void actualizarAlumno(int ID) throws Exception
     {
         try 
         {
@@ -258,7 +258,7 @@ public class Controlador
         }
     }
     
-    public void actualizarMaestro(int ID) 
+    public void actualizarMaestro(int ID) throws Exception
     {
         try 
         {
@@ -279,7 +279,7 @@ public class Controlador
     
     
     
-    public void eliminarAlumno(int ID) 
+    public void eliminarAlumno(int ID) throws Exception
     {
         try 
         {
@@ -293,7 +293,7 @@ public class Controlador
         }
     }
     
-    public void eliminarMaestro(int ID) 
+    public void eliminarMaestro(int ID) throws Exception
     {
         try 
         {
