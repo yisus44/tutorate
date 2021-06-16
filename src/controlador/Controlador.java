@@ -14,14 +14,11 @@ import persistencia.Singleton;
 
 public class Controlador 
 {
-    /*private Alumno alumno;
-    private Maestro maestro;
-    private Usuario usuario;*/
-    
     private Singleton singleton;
     
     
-    private ArrayList<Maestro> maestros = new ArrayList<Maestro>();
+    private ArrayList<Maestro> maestrosDisponibles = new ArrayList<Maestro>();
+    private ArrayList<Maestro> maestrosTutores = new ArrayList<Maestro>();
     private ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
     
     
@@ -62,35 +59,33 @@ public class Controlador
     private final String qInsertarTutorias = "INSERT INTO Tutorias VALUES (0, ?, ?)";
 
     // Ver lista de Maestros disponibles
-    private final String  qSelectMaestrosDisponibles = "SELECT Maestros.MaestrosID \"MaestrosID\" Usuarios.Nombre \"Nombre\", "
-            + "Maestros.Especialidad \"Especialidad\" FROM Usuarios INNER JOIN Maestros ON Maestros.UsuarioID = Usuarios.UsuarioID "
-            + "WHERE Maestros.MaestroID NOT IN (SELECT MaestroID FROM Tutorias WHERE AlumnoID = ?)";
+    private final String  qSelectMaestrosDisponibles = "SELECT Maestros.MaestroID \"MaestroID\", Usuarios.Nombre \"Nombre\", Usuarios.Email \"Email\", Maestros.Especialidad \"Especialidad\" FROM Usuarios INNER JOIN Maestros ON Maestros.MaestroID = Usuarios.UsuarioID WHERE Maestros.MaestroID NOT IN (SELECT MaestroID FROM Tutorias WHERE AlumnoID = ?)";
 
     // Ver lista de Tutores 
-    private final String qSelectMaestrosTutores = "SELECT Usuarios.Nombre \"Nombre\", Maestros.Especialidad \"Especialidad\" "
-            + "FROM Usuarios INNER JOIN Maestros ON Maestros.UsuarioID = Usuarios.UsuarioID "
-            + "WHERE Maestros.MaestroID IN (SELECT MaestroID FROM Tutorias WHERE AlumnoID = ?)";
+    private final String qSelectMaestrosTutores = "SELECT Maestros.MaestroID \"MaestroID\", Usuarios.Nombre \"Nombre\", Usuarios.Email \"Email\", Maestros.Especialidad \"Especialidad\" FROM Usuarios INNER JOIN Maestros ON Maestros.MaestroID = Usuarios.UsuarioID WHERE Maestros.MaestroID IN (SELECT MaestroID FROM Tutorias WHERE AlumnoID = ?)";
 
     // Modificar perfil
-    private final String qActualizarAlumno = "UPDATE Usuarios SET Nombre = ?, Email = ?, Edad = ?, Contrasena = ?" +
-    "WHERE UsuarioID = (SELECT UsuarioID FROM Alumnos WHERE AlumnoID = ?)";
+    private final String qActualizarAlumno = "UPDATE Usuarios SET Nombre = ?, Email = ?, Edad = ?, Contrasena = ? WHERE UsuarioID = ?";
 
 
     // VENTANA INTERFAZ MAESTRO
 
     // Ver lista de Tutorados
-    private final String  qSelectTutorados = "SELECT Alumnos.AlumnoID \"AlumnoID\", Usuarios.Nombre \"Nombre\"," +
-    "Usuarios.Email \"Email\", Usuarios.Edad \"Edad\" FROM Usuarios" +
-    "INNER JOIN Alumnos ON Alumnos.UsuarioID = Usuarios.UsuarioID" +
-    "WHERE Alumnos.AlumnoID IN (SELECT AlumnoID FROM Tutorias WHERE MaestroID = ?)";
+    private final String  qSelectTutorados = "SELECT Alumnos.AlumnoID \"AlumnoID\", Usuarios.Nombre \"Nombre\", Usuarios.Email \"Email\", Usuarios.Edad \"Edad\" FROM Usuarios INNER JOIN Alumnos ON Alumnos.AlumnoID = Usuarios.UsuarioID WHERE Alumnos.AlumnoID IN (SELECT AlumnoID FROM Tutorias WHERE MaestroID = ?)";
 
     // Modificar perfil
-    private final String qActualizarMaestro = "UPDATE Usuarios SET Nombre = ?, Email = ?, Edad = ?, Contrasena = ?" +
-    "WHERE UsuarioID = (SELECT UsuarioID FROM Maestros WHERE MaestroID = ?)";
+    private final String qActualizarMaestro = "UPDATE Usuarios SET Nombre = ?, Email = ?, Edad = ?, Contrasena = ? WHERE UsuarioID = ?";
 
     // Eliminar tutoria
-    private final String qEliminarTutoria = "DELETE FROM Tutorias WHERE AlumnoID = ?";
+    private final String qEliminarTutoria = "DELETE FROM Tutorias WHERE AlumnoID = ? AND MaestroID = ?";
 
+    
+    
+    private final String qConsultarAlumno = "SELECT Usuarios.Nombre \"Nombre\", Usuarios.Email \"Email\", Usuarios.Edad \"Edad\", Usuarios.Contrasena \"Contrasena\" FROM Usuarios INNER JOIN Alumnos ON Alumnos.AlumnoID = Usuarios.UsuarioID WHERE UsuarioID=?;";
+    
+    private final String qConsultarMaestro = "SELECT Usuarios.Nombre \"Nombre\", Usuarios.Email \"Email\", Usuarios.Edad \"Edad\", Usuarios.Contrasena \"Contrasena\", Maestros.Especialidad \"Especialidad\" FROM Usuarios INNER JOIN Maestros ON Maestros.MaestroID = Usuarios.UsuarioID WHERE UsuarioID=?;";
+    
+    
     
     
     public Controlador() throws Exception
@@ -129,40 +124,29 @@ public class Controlador
             System.out.println("Controlador: Error al cerrar conexion con BD");
         }
     }
-    
+
     
     // GETTERS Y SETTERS
     
-    /*public Alumno getAlumno() 
+    public ArrayList<Maestro> getMaestrosDisponibles() 
     {
-        return alumno;
+        return maestrosDisponibles;
     }
 
-    public void setAlumno(Alumno alumno) 
+    public void setMaestrosDisponibles(ArrayList<Maestro> maestrosDisponibles) 
     {
-        this.alumno = alumno;
-    }
-    
-    public Maestro getMaestro(Maestro maestro) 
-    {
-        return maestro;
+        this.maestrosDisponibles = maestrosDisponibles;
     }
 
-    public void setMaestro(Maestro maestro) 
+    public ArrayList<Maestro> getMaestrosTutores() 
     {
-        this.maestro = maestro;
-    }*/
-
-    public ArrayList<Maestro> getMaestros() 
-    {
-        return maestros;
+        return maestrosTutores;
     }
 
-    public void setMaestros(ArrayList<Maestro> maestros) 
+    public void setMaestrosTutores(ArrayList<Maestro> maestrosTutores) 
     {
-        this.maestros = maestros;
+        this.maestrosTutores = maestrosTutores;
     }
-
     
     public ArrayList<Alumno> getAlumnos() 
     {
@@ -173,26 +157,6 @@ public class Controlador
     {
         this.alumnos = alumnos;
     }
-    
-    
-    
-    
-    // CARGAR OBJETOS - MODELOS
-    
-    /*public void cargarAlumno(String nombre, String email, int edad, String contraseña)
-    {
-        alumno = new Alumno(nombre, email, edad, contraseña);
-    }
-    
-    public void cargarMaestro(String nombre, String email, int edad, String contraseña, String especialidad)
-    {
-        maestro = new Maestro(nombre, email, edad, contraseña, especialidad);
-    }
-    
-    public void cargarUsuario(String nombre, String email, int edad, String contraseña)
-    {
-        usuario = new Usuario(nombre, email, edad, contraseña);
-    }*/
     
     
     // INSERTAR
@@ -368,6 +332,7 @@ public class Controlador
             queryConsultar = conexion.prepareStatement(qConsultarAlumnos);
             queryConsultar.setInt(1, usuario.getUsuarioID());
             rs = queryConsultar.executeQuery();
+            
             if(rs.next())
             {
                 Singleton.get().setAlumno(new Alumno(usuario));
@@ -390,7 +355,7 @@ public class Controlador
     {
         try 
         {
-            maestros.clear();
+            maestrosDisponibles.clear();
             
             queryConsultar = conexion.prepareStatement(qSelectMaestrosDisponibles);
             queryConsultar.setInt(1, AlumnoID);
@@ -398,7 +363,8 @@ public class Controlador
             
             while(rs.next())
             {
-                maestros.add(new Maestro(rs.getInt("MaestroID"), rs.getString("Nombre"), "", 0, "", rs.getString("Especialidad")));
+                maestrosDisponibles.add(new Maestro(rs.getInt("MaestroID"), rs.getString("Nombre"), rs.getString("Email"), 0, "", 
+                        rs.getString("Especialidad")));
             }
         }
         catch (SQLException ex) 
@@ -411,7 +377,7 @@ public class Controlador
     {
         try 
         {
-            maestros.clear();
+            maestrosTutores.clear();
             
             queryConsultar = conexion.prepareStatement(qSelectMaestrosTutores);
             queryConsultar.setInt(1, AlumnoID);
@@ -419,7 +385,8 @@ public class Controlador
             
             while(rs.next())
             {
-                maestros.add(new Maestro(0, rs.getString("Nombre"), "", 0, "", rs.getString("Especialidad")));
+                maestrosTutores.add(new Maestro(rs.getInt("MaestroID"), rs.getString("Nombre"), rs.getString("Email"), 0, "", 
+                        rs.getString("Especialidad")));
             }
         }
         catch (SQLException ex) 
@@ -449,6 +416,58 @@ public class Controlador
         }
     }
     
+    public boolean consultarMaestro(int MaestroID) throws Exception
+    {
+        try 
+        {
+            queryConsultar = conexion.prepareStatement(qConsultarMaestro);
+            queryConsultar.setInt(1, MaestroID);
+            rs = queryConsultar.executeQuery();
+            if(rs.next())
+            {
+                Singleton.get().setMaestro(new Maestro(MaestroID, rs.getString("Nombre"), rs.getString("Email"), 
+                        rs.getInt("Edad"), rs.getString("Contrasena"), rs.getString("Especialidad")));
+                Singleton.get().setEsMaestro(true);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (SQLException ex) 
+        {
+            System.out.println("Controlador: Error al consultarMaestro" + "\nError: " + ex);  
+            return false;
+        }
+    }
+    
+    public boolean consultarAlumno(int AlumnoID) throws Exception
+    {
+        try 
+        {
+            queryConsultar = conexion.prepareStatement(qConsultarAlumno);
+            queryConsultar.setInt(1, AlumnoID);
+            rs = queryConsultar.executeQuery();
+            
+            if(rs.next())
+            {
+                Singleton.get().setAlumno(new Alumno(AlumnoID, rs.getString("Nombre"), rs.getString("Email"), 
+                        rs.getInt("Edad"), rs.getString("Contrasena")));
+                Singleton.get().setEsMaestro(false);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (SQLException ex) 
+        {
+            System.out.println("Controlador: Error al consultarAlumno" + "\nError: " + ex);  
+            return false;
+        }
+    }
     
     
     // ACTUALIZAR
@@ -471,7 +490,7 @@ public class Controlador
         }
     }
     
-    public void actualizarMaestro(String nombre, String email, int edad, String contraseña, String especialidad, int MaestroID) throws Exception
+    public void actualizarMaestro(String nombre, String email, int edad, String contraseña, int MaestroID) throws Exception
     {
         try 
         {
@@ -493,12 +512,13 @@ public class Controlador
     
     // ELIMINAR
     
-    public void eliminarTutoria(int AlumnoID) throws Exception
+    public void eliminarTutoria(int AlumnoID, int MaestroID) throws Exception
     {
         try 
         {
             queryInsertar = conexion.prepareStatement(qEliminarTutoria);
             queryInsertar.setInt(1, AlumnoID);
+            queryInsertar.setInt(2, MaestroID);
             queryInsertar.executeUpdate();
         }
         catch (SQLException ex) 

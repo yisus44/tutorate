@@ -35,6 +35,10 @@ public class Singleton
     
     public static Singleton get()
     {
+        if(singleton == null)
+        {
+            singleton = new Singleton();
+        }
         return singleton;
     }
     

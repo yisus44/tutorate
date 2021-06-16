@@ -1,0 +1,92 @@
+
+DROP DATABASE tutorate;
+CREATE DATABASE tutorate;
+USE tutorate;
+
+CREATE TABLE Usuarios
+(
+UsuarioID INT NOT NULL AUTO_INCREMENT,
+Nombre VARCHAR(50),
+Email VARCHAR(30),
+Edad INT,
+Contrasena VARCHAR(50),
+PRIMARY KEY(UsuarioID)
+);
+
+CREATE TABLE Maestros
+(
+MaestroID INT NOT NULL,
+Especialidad VARCHAR(50),
+PRIMARY KEY(MaestroID),
+FOREIGN KEY(MaestroID) REFERENCES Usuarios(UsuarioID)
+);
+
+
+CREATE TABLE Alumnos
+(
+AlumnoID INT NOT NULL,
+PRIMARY KEY(AlumnoID),
+FOREIGN KEY(AlumnoID) REFERENCES Usuarios(UsuarioID)
+);
+
+
+CREATE TABLE Tutorias
+(
+TutoriaID INT NOT NULL AUTO_INCREMENT,
+MaestroID INT,
+AlumnoID INT,
+PRIMARY KEY(TutoriaID),
+FOREIGN KEY(MaestroID) REFERENCES Maestros(MaestroID),
+FOREIGN KEY(AlumnoID) REFERENCES Alumnos(AlumnoID)
+);
+
+
+
+
+INSERT INTO Usuarios VALUES (0, "Profe", "Email", 21, "1234");
+INSERT INTO Maestros VALUES (1, "Especialidad");
+INSERT INTO Usuarios VALUES (0, "Profe2", "Email2", 212, "12342");
+INSERT INTO Maestros VALUES (2, "Especialidad");
+INSERT INTO Usuarios VALUES (0, "Profe3", "Email3", 213, "12343");
+INSERT INTO Maestros VALUES (3, "Especialidad");
+INSERT INTO Usuarios VALUES (0, "Profe4", "Email4", 214, "12344");
+INSERT INTO Maestros VALUES (4, "Especialidad");
+
+
+
+INSERT INTO Usuarios VALUES (0, "Alumno5", "Email5", 215, "12345");
+INSERT INTO Alumnos VALUES (5);
+INSERT INTO Usuarios VALUES (0, "Alumno6", "Email6", 216, "12346");
+INSERT INTO Alumnos VALUES (6);
+INSERT INTO Usuarios VALUES (0, "Alumno7", "Email7", 217, "12347");
+INSERT INTO Alumnos VALUES (7);
+
+
+
+INSERT INTO Tutorias VALUES (0, 1, 5);
+INSERT INTO Tutorias VALUES (0, 1, 6);
+INSERT INTO Tutorias VALUES (0, 2, 6);
+INSERT INTO Tutorias VALUES (0, 3, 6);
+INSERT INTO Tutorias VALUES (0, 3, 7);
+INSERT INTO Tutorias VALUES (0, 4, 5);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

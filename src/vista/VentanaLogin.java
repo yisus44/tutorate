@@ -1,13 +1,67 @@
 
 package vista;
 
+import controlador.Controlador;
+import javax.swing.JOptionPane;
+import persistencia.Singleton;
 
-public class VentanaLogin extends javax.swing.JFrame {
 
-    public VentanaLogin() {
-        initComponents();
+public class VentanaLogin extends javax.swing.JFrame 
+{
+
+    Controlador controlador;
+    
+    public VentanaLogin() 
+    {
+        try
+        {
+            initComponents();
+            setTitle("Ventana Login");
+            setLocationRelativeTo(null);
+            setResizable(false);
+            
+            controlador = new Controlador();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Ventana login: Error en VentanaLogin()");
+        }
     }
 
+    
+    
+    
+    
+    
+    public int consultarLogin(String email, String contrasena)
+    {
+        try
+        {
+            controlador.abrirConexion();
+            int res = controlador.consultarLogin(email, contrasena);
+            if(res == -1)
+            {
+                JOptionPane.showMessageDialog(this, "Usuario no existe en la Base de Datos");
+                return -1;
+            }
+            else if(res == -2)
+            {
+                JOptionPane.showMessageDialog(this, "IMPOSIBOOOOOOOL");
+                return -2;
+            }
+            
+            controlador.cerrarConexion();
+            return 1;
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Vista: Error con consultarLogin");
+            return -1;
+        }
+    }
+    
+    
+    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -22,11 +76,12 @@ public class VentanaLogin extends javax.swing.JFrame {
         tfCorreo = new javax.swing.JTextField();
         lblComplemento = new javax.swing.JLabel();
         lblPass = new javax.swing.JLabel();
-        pfPass = new javax.swing.JPasswordField();
+        tfPass = new javax.swing.JPasswordField();
         lblRegistrarse = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         btnRegistrarse = new javax.swing.JButton();
         cbRecuerdame = new javax.swing.JCheckBox();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +116,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         lblCorreo.setText("Correo electronico");
 
         tfCorreo.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tfCorreo.setText("Email2");
 
         lblComplemento.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblComplemento.setText("@tutorate.mx");
@@ -68,7 +124,8 @@ public class VentanaLogin extends javax.swing.JFrame {
         lblPass.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         lblPass.setText("Contraseña");
 
-        pfPass.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tfPass.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tfPass.setText("12342");
 
         lblRegistrarse.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblRegistrarse.setForeground(new java.awt.Color(0, 153, 153));
@@ -78,10 +135,25 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnRegistrarse.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btnRegistrarse.setText("Registrarme");
         btnRegistrarse.setToolTipText("");
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarseActionPerformed(evt);
+            }
+        });
 
         cbRecuerdame.setBackground(new java.awt.Color(204, 255, 255));
         cbRecuerdame.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cbRecuerdame.setText("Recuérdame ");
+
+        btnLogin.setBackground(new java.awt.Color(0, 153, 153));
+        btnLogin.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        btnLogin.setText("Ingresar");
+        btnLogin.setToolTipText("");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout paneAzulLayout = new javax.swing.GroupLayout(paneAzul);
         paneAzul.setLayout(paneAzulLayout);
@@ -101,16 +173,17 @@ public class VentanaLogin extends javax.swing.JFrame {
                         .addComponent(btnRegistrarse))
                     .addGroup(paneAzulLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblPass)
                             .addComponent(lblCorreo)
                             .addGroup(paneAzulLayout.createSequentialGroup()
                                 .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(pfPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                                    .addComponent(tfPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                                     .addComponent(tfCorreo, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblComplemento))
-                            .addComponent(cbRecuerdame, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbRecuerdame, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         paneAzulLayout.setVerticalGroup(
@@ -127,10 +200,12 @@ public class VentanaLogin extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(lblPass)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pfPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(cbRecuerdame)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(btnLogin)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -165,34 +240,51 @@ public class VentanaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        
+        int res = consultarLogin(tfCorreo.getText(), tfPass.getText());
+        
+        if(res == 1)
+        {
+            if(Singleton.get() != null)
+            {
+                if(Singleton.get().isEsMaestro())
+                {
+                    VentanaMaestro formMaestro = new VentanaMaestro();
+                    formMaestro.setVisible(true);
+                    formMaestro.setTitle("Ventana Maestro");
+                    this.setVisible(false);
+                    this.dispose();
+                }
+                else
+                {
+                    VentanaAlumno formAlumno = new VentanaAlumno();
+                    formAlumno.setVisible(true);
+                    formAlumno.setTitle("Ventana Alumno");
+                    this.setVisible(false);
+                    this.dispose();
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_btnLoginActionPerformed
 
-        /* Create and display the form */
+    
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
+        VentanaRegistro formRegistro = new VentanaRegistro();
+        formRegistro.setVisible(true);;
+        formRegistro.setTitle("Ventana Registro");
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_btnRegistrarseActionPerformed
+
+    
+    
+    
+    
+    
+    
+    public static void main(String args[]) 
+    {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaLogin().setVisible(true);
@@ -201,6 +293,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegistrarse;
     private javax.swing.JCheckBox cbRecuerdame;
     private javax.swing.JSeparator jSeparator1;
@@ -213,8 +306,8 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JPanel paneAzul;
     private javax.swing.JPanel paneVerde;
     private java.awt.Panel panel1;
-    private javax.swing.JPasswordField pfPass;
     private javax.swing.JTextField tfCorreo;
+    private javax.swing.JPasswordField tfPass;
     // End of variables declaration//GEN-END:variables
 
 }
