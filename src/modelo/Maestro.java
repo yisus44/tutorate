@@ -6,10 +6,12 @@ public class Maestro extends Usuario {
 
 
     private String especialdad;
+    private int MaestroID;
    
 
-    public Maestro(int id, String nombre, String email, int edad, String contraseña, String especialidad) {
+    public Maestro(int id, int MaestroID, String nombre, String email, int edad, String contraseña, String especialidad) {
         super(id,nombre,email,edad,contraseña);
+        this.MaestroID=MaestroID;
         this.especialdad=especialidad;
     }
     
@@ -30,6 +32,14 @@ public class Maestro extends Usuario {
 
     public void setNombre(String especialdad) {
         this.especialdad = especialdad;
+    }
+    
+    public int getMaestroID(){
+        return MaestroID;
+    }
+    
+    public void setMaestro(int MaestroID) {
+        this.MaestroID = MaestroID;
     }
     
     public boolean renunciar(){
