@@ -3,9 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/VentanaMaestro.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/printTutorados.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/tutoresDisponibles.java</file>
             <file>file:/C:/Users/jorge/Desktop/tutorate/src/modelo/Alumno.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/misTutorados.java</file>
             <file>file:/C:/Users/jorge/Desktop/tutorate/src/controlador/Controlador.java</file>
-            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/FrameDePruebaNoOficial.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/VentanaRegistro.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/VentanaAlumno.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/modelo/Maestro.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/TerminosCondiciones.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/misTutores.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/VentanaLogin.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/perfil.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/vista/printTutores.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/modelo/Usuario.java</file>
+            <file>file:/C:/Users/jorge/Desktop/tutorate/src/persistencia/Singleton.java</file>
         </group>
     </open-files>
 </project-private>
