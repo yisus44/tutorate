@@ -27,17 +27,150 @@ public class VentanaMaestro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        paneVerde = new javax.swing.JPanel();
+        lblTutorate = new javax.swing.JLabel();
+        paneAzul = new javax.swing.JPanel();
+        lblBienvenido = new javax.swing.JLabel();
+        lblNombreTutor = new javax.swing.JLabel();
+        lblIconoAnimal = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        lblActualizar = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTutorados = new javax.swing.JTable();
+        jmbVtnMaestro = new javax.swing.JMenuBar();
+        menuMiPerfil = new javax.swing.JMenu();
+        menuMostrarPerfil = new javax.swing.JMenuItem();
+        menuCerrarSesion = new javax.swing.JMenuItem();
+        menuImpriimirTutorados = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        paneVerde.setBackground(new java.awt.Color(0, 153, 153));
+
+        lblTutorate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTutorate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/2_2.PNG"))); // NOI18N
+
+        javax.swing.GroupLayout paneVerdeLayout = new javax.swing.GroupLayout(paneVerde);
+        paneVerde.setLayout(paneVerdeLayout);
+        paneVerdeLayout.setHorizontalGroup(
+            paneVerdeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneVerdeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTutorate)
+                .addGap(40, 40, 40))
+        );
+        paneVerdeLayout.setVerticalGroup(
+            paneVerdeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneVerdeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTutorate, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
+        );
+
+        paneAzul.setBackground(new java.awt.Color(204, 255, 255));
+
+        lblBienvenido.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
+        lblBienvenido.setText("Bienvenido");
+
+        lblNombreTutor.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
+        lblNombreTutor.setText("nombre");
+
+        lblIconoAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconoAnimal.PNG"))); // NOI18N
+
+        lblActualizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btn actualizar.png"))); // NOI18N
+
+        tblTutorados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblTutorados);
+
+        javax.swing.GroupLayout paneAzulLayout = new javax.swing.GroupLayout(paneAzul);
+        paneAzul.setLayout(paneAzulLayout);
+        paneAzulLayout.setHorizontalGroup(
+            paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneAzulLayout.createSequentialGroup()
+                .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(paneAzulLayout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(lblBienvenido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNombreTutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(77, 77, 77)
+                        .addComponent(lblIconoAnimal))
+                    .addGroup(paneAzulLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblActualizar)))
+                .addGap(74, 74, 74))
+            .addGroup(paneAzulLayout.createSequentialGroup()
+                .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneAzulLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(paneAzulLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        paneAzulLayout.setVerticalGroup(
+            paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneAzulLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(paneAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIconoAnimal)
+                    .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreTutor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(lblActualizar)
+                .addGap(20, 20, 20))
+        );
+
+        menuMiPerfil.setText("Mi perfil");
+
+        menuMostrarPerfil.setText("mostrar perfil");
+        menuMiPerfil.add(menuMostrarPerfil);
+
+        menuCerrarSesion.setText("cerrar sesión");
+        menuMiPerfil.add(menuCerrarSesion);
+
+        jmbVtnMaestro.add(menuMiPerfil);
+
+        menuImpriimirTutorados.setText("Imprimir tutorados");
+        jmbVtnMaestro.add(menuImpriimirTutorados);
+
+        setJMenuBar(jmbVtnMaestro);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(paneVerde, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(paneAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(paneVerde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(paneAzul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +212,20 @@ public class VentanaMaestro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JMenuBar jmbVtnMaestro;
+    private javax.swing.JLabel lblActualizar;
+    private javax.swing.JLabel lblBienvenido;
+    private javax.swing.JLabel lblIconoAnimal;
+    private javax.swing.JLabel lblNombreTutor;
+    private javax.swing.JLabel lblTutorate;
+    private javax.swing.JMenuItem menuCerrarSesion;
+    private javax.swing.JMenu menuImpriimirTutorados;
+    private javax.swing.JMenu menuMiPerfil;
+    private javax.swing.JMenuItem menuMostrarPerfil;
+    private javax.swing.JPanel paneAzul;
+    private javax.swing.JPanel paneVerde;
+    private javax.swing.JTable tblTutorados;
     // End of variables declaration//GEN-END:variables
 }
